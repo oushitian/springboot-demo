@@ -1,7 +1,9 @@
 package com.fd.springbootdemo.controller;
 
 import com.fd.springbootdemo.annotation.PageQuery;
+import com.fd.springbootdemo.entity.Role;
 import com.fd.springbootdemo.entity.User;
+import com.fd.springbootdemo.service.RoleService;
 import com.fd.springbootdemo.service.UserService;
 import com.fd.springbootdemo.utils.PageUtil;
 import com.github.pagehelper.PageInfo;
@@ -26,6 +28,20 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
+
+    @RequestMapping("/index")
+    public String toIndex(){
+        return "roleList";
+    }
+
+    @RequestMapping("/roleList")
+    @ResponseBody
+    public List<Role> roleList(){
+        List<Role> roleList = roleService.findRoleList();
+        return roleList;
+    }
 
     @RequestMapping("/toFreemarker")
     public String toFreemarker(Map<String, Object> map){
