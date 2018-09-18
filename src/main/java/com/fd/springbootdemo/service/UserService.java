@@ -5,7 +5,9 @@ import com.fd.springbootdemo.entity.User;
 import com.fd.springbootdemo.mapper.UserMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
  * @Desc 写点注释吧
  **/
 @Service
+@Slf4j
 public class UserService {
 
     @Autowired
@@ -37,5 +40,10 @@ public class UserService {
 
     public User findUser(String name) {
         return mapper.findByName(name);
+    }
+
+    @Async//相当于新开了一个线程执行任务
+    public void testAsync() {
+        log.info("this is asynv");
     }
 }

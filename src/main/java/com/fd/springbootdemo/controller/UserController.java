@@ -21,7 +21,7 @@ import java.util.Map;
  **/
 @Controller
 @RequestMapping("/")
-@Slf4j//lombok的日志记录
+@Slf4j//lombok的日志记录 ,只要配置了log4j.properties就可以了
 public class UserController {
 
     @Autowired
@@ -62,5 +62,11 @@ public class UserController {
     @ResponseBody
     public PageInfo<User> getUsrListByAnnotation(){
         return PageUtil.getPageInfo(userService.getUserListByAnnotation());
+    }
+
+    @RequestMapping("/testAsynv")
+    public String testAsync(){
+        userService.testAsync();
+        return "1";
     }
 }
