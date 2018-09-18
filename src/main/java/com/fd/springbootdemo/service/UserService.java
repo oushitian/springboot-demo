@@ -1,5 +1,6 @@
 package com.fd.springbootdemo.service;
 
+import com.fd.springbootdemo.annotation.PageQuery;
 import com.fd.springbootdemo.entity.User;
 import com.fd.springbootdemo.mapper.UserMapper;
 import com.github.pagehelper.PageHelper;
@@ -22,11 +23,16 @@ public class UserService {
 
     public PageInfo<User> getUserList(int page,int pageSize){
         // 开启分页插件,放在查询语句上面
+        //利用aop和注解优化次代码
         PageHelper.startPage(page,pageSize);
         List<User> list = mapper.findUserList();
         PageInfo<User> pageInfoUser = new PageInfo<User>(list);
         return pageInfoUser;
-//        return PageUtil.getPageInfo(mapper.findUserList(),page,pageSize);
+    }
+
+    @PageQuery(pageNumName = "page",pageSizeName = "size")//和默认名字不一样的这里需要指明
+    public List<User> getUserListByAnnotation(){
+        return mapper.findUserList();
     }
 
     public User findUser(String name) {

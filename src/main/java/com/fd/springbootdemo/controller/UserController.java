@@ -1,7 +1,9 @@
 package com.fd.springbootdemo.controller;
 
+import com.fd.springbootdemo.annotation.PageQuery;
 import com.fd.springbootdemo.entity.User;
 import com.fd.springbootdemo.service.UserService;
+import com.fd.springbootdemo.utils.PageUtil;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,5 +56,11 @@ public class UserController {
     @ResponseBody
     public PageInfo<User> getUserList(int page, int pageSize){
         return userService.getUserList(page,pageSize);
+    }
+
+    @RequestMapping("/getUserListByAnnotation")
+    @ResponseBody
+    public PageInfo<User> getUsrListByAnnotation(){
+        return PageUtil.getPageInfo(userService.getUserListByAnnotation());
     }
 }
