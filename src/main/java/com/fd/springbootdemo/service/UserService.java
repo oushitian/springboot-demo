@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 /**
  * @Author fengdi
  * @Create 2018-09-17 19:30
@@ -24,7 +25,7 @@ public class UserService {
     @Autowired
     private UserMapper mapper;
 
-    public PageInfo<User> getUserList(int page,int pageSize){
+    public PageInfo<User> getUserList(int page, int pageSize){
         // 开启分页插件,放在查询语句上面
         //利用aop和注解优化次代码
         PageHelper.startPage(page,pageSize);

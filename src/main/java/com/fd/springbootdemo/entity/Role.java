@@ -1,31 +1,44 @@
 package com.fd.springbootdemo.entity;
 
-import lombok.Data;
-
-/**
- * @Author fengdi
- * @Create 2018-09-18 15:58
- * @Desc 写点注释吧
- **/
-@Data
 public class Role {
+    private Integer id;
 
-    /**
-     * 角色id
-     */
-    protected Long id;
+    private Byte state;
 
-    /**
-     * 角色编号
-     */
-    protected String roleCode;
+    private String description;
 
-    /**
-     * 角色名称
-     */
-    protected String roleName;
-    /**
-     * 状态   0:可用   1:不可用
-     */
-    protected Integer status;
+    private String role;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Byte getState() {
+        return state;
+    }
+
+    public void setState(Byte state) {
+        this.state = state;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role == null ? null : role.trim();
+    }
+
 }
