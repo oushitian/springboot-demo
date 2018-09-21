@@ -47,4 +47,8 @@ public class UserService {
     public void testAsync() {
         log.info("this is asynv");
     }
+
+    public int insert(User user) {
+        return mapper.insert(user);
+    }
 }

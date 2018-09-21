@@ -2,6 +2,8 @@ package com.fd.springbootdemo.controller;
 
 import com.fd.springbootdemo.controller.base.Result;
 import com.fd.springbootdemo.controller.base.ResultGenerator;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
