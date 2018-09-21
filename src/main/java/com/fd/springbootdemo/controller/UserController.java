@@ -33,7 +33,7 @@ public class UserController {
      */
     @ApiOperation(value ="查询所有用户",notes ="",httpMethod = "POST")
     @RequestMapping("/userList")
-    @RequiresPermissions("aaa")//权限管理;
+    @RequiresPermissions("person_kaoqin")//权限管理;
     public String userInfo(){
         return "user/userList";
     }
