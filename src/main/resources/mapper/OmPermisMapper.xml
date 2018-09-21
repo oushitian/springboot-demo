@@ -139,4 +139,19 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where permis_id = #{permisId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByUserId" resultMap="BaseResultMap">
+		select
+			op.permis_id,
+			op.permis_name,
+			op.permis_code
+		from
+			om_permis op,
+			role_permis rp,
+			user_role oro
+		where
+			op.permis_id=rp.permis_id
+		and rp.role_id = oro.role_id
+		and oro.user_id = #{userId}
+	</select>
 </mapper>

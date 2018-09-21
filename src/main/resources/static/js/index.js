@@ -33,7 +33,7 @@ function InitLeftMenu() {
 
                     var url = $(this).attr("rel");
                     var menuid = $(this).attr("ref");
-                    var icon = getIcon(menuid,icon);
+                    var icon = getIcon(menuid,data);
 
                     addTab(tabTitle,url,icon);
                     $('.easyui-accordion li div').removeClass("selected");
@@ -58,11 +58,11 @@ function InitLeftMenu() {
     });
 }
 //获取左侧导航的图标
-function getIcon(menuid){
+function getIcon(menuid,data){
 	var icon = 'icon ';
-	$.each(_menus.menus, function(i, n) {
-		 $.each(n.menus, function(j, o) {
-		 	if(o.menuid==menuid){
+	$.each(data, function(i, n) {
+		 $.each(n.children, function(j, o) {
+		 	if(o.menuId==menuid){
 				icon += o.icon;
 			}
 		 })

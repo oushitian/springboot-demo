@@ -114,4 +114,22 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where role_id = #{roleId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByUserId" resultMap="BaseResultMap">
+		select
+			oro.role_id,
+			oro.role_code,
+			oro.role_name,
+			oro.type,
+			oro.remark
+		from
+			om_role oro,
+			om_user ou,
+			user_role ur
+		where
+			ur.user_id = #{userId}
+		and ur.role_id = oro.role_id
+		and ur.user_id = ou.user_id
+	</select>
+
 </mapper>

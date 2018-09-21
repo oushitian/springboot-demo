@@ -1,9 +1,14 @@
 package com.fd.springbootdemo.shiro;
 
+import com.fd.springbootdemo.entity.OmPermis;
+import com.fd.springbootdemo.entity.OmRole;
 import com.fd.springbootdemo.entity.OmUser;
+import com.fd.springbootdemo.service.PermisService;
+import com.fd.springbootdemo.service.RoleService;
 import com.fd.springbootdemo.service.UserService;
 import com.fd.springbootdemo.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -17,6 +22,10 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 
 /**
  * @Author xyl
@@ -28,6 +37,10 @@ public class MyShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private PermisService permisService;
 
     /**
      * 授权(权限控制)
@@ -36,17 +49,62 @@ public class MyShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-//        log.info("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
-//        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-//        OmUser user = (OmUser) principals.getPrimaryPrincipal();
-//        for(OmRole role:roleService.findByUserId(user.getUserId())){
-//            authorizationInfo.addRole(role.getRole());
-//            for(Permission p:rolePermissionService.findByRoleId(role.getId())){
-//                authorizationInfo.addStringPermission(p.getPermission());
-//            }
-//        }
-//        return authorizationInfo;
-        return new SimpleAuthorizationInfo();
+        log.info("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
+        // 获取登录时输入的用户名
+        //String username = (String) principals.getPrimaryPrincipal();
+
+        Session session = SecurityUtils.getSubject().getSession();
+        OmUser omUser = (OmUser) session.getAttribute(Constant.USER_SESSION_KEY);
+
+        // 权限信息对象，用来存放查出的用户的所有的角色（role）及权限（permission）等
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        if (null != omUser) {
+            authorizationInfo.setRoles(this.getUserRoles(omUser.getUserId()));
+            authorizationInfo.setStringPermissions(this.getUserPermissions(omUser.getUserId()));
+        }
+
+        return authorizationInfo;
+    }
+
+    /**
+     * 获取用户权限
+     *
+     * @param userId
+     * @return
+     */
+    private Set<String> getUserPermissions(Integer userId) {
+        List<OmPermis> permisList = permisService.selectByUserId(userId);
+        Set<String> stringPermissions = new HashSet<>();
+        if (CollectionUtils.isEmpty(permisList)) {
+            return stringPermissions;
+        }
+
+        for (OmPermis op : permisList) {
+            stringPermissions.add(op.getPermisCode());
+        }
+
+        return stringPermissions;
+    }
+
+    /**
+     * 获取用户角色
+     *
+     * @param userId
+     * @return
+     */
+    private Set<String> getUserRoles(Integer userId) {
+        List<OmRole> orRoleList = roleService.selectByUserId(userId);
+
+        Set<String> roles = new HashSet<>();
+        if (CollectionUtils.isEmpty(orRoleList)) {
+            return roles;
+        }
+
+        for (OmRole or : orRoleList) {
+            roles.add(or.getRoleCode());
+        }
+
+        return roles;
     }
 
     /**
