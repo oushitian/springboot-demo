@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @Author fengdi
@@ -80,4 +82,10 @@ public class UserController {
 //        userService.testAsync();
 //        return "1";
 //    }
+
+    @RequestMapping("/updatePwd")
+    @ResponseBody
+    public String updatePwd(String newpass){
+        return "success";
+    }
 }

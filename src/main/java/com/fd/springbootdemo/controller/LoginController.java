@@ -1,15 +1,9 @@
 package com.fd.springbootdemo.controller;
 
-import com.fd.springbootdemo.controller.base.Result;
-import com.fd.springbootdemo.controller.base.ResultGenerator;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +52,16 @@ public class LoginController {
         map.put("msg", msg);
         // 此方法不处理登录成功,由shiro进行处理
         return "/login";
+    }
+
+    /**
+     * 登出ShiroConfig的filterChainDefinitionMap.put("/logout", "logout");配置了，所以这方法不配也可以
+     */
+    @RequestMapping("/logout")
+    public void onLogout() {
+        log.info("退出登录");
+        Subject currentUser = SecurityUtils.getSubject();
+        currentUser.logout();
     }
 
     @RequestMapping("/403")
