@@ -13,16 +13,15 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * @Author xyl
+ * @Author fengdi
  * @Create 2018-09-19 11:58
- * @Desc 写点注释吧
+ * @Desc shiro的配置类
  **/
 @Configuration
 public class ShiroConfig {
 
     @Bean
     public ShiroFilterFactoryBean shirFilter(DefaultWebSecurityManager securityManager) {
-        System.out.println("ShiroConfiguration.shirFilter()");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //拦截器.

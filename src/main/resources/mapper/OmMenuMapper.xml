@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fd.springbootdemo.mapper.OmMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.fd.springbootdemo.entity.OmMenu" >
+    <id column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="menu_text" property="menuText" jdbcType="VARCHAR" />
+    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="permis_id" property="permisId" jdbcType="INTEGER" />
+    <result column="enable_flag" property="enableFlag" jdbcType="TINYINT" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="menu_order" property="menuOrder" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    menu_id, parent_id, menu_text, menu_url, permis_id, enable_flag,icon, menu_order, create_time,
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from om_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from om_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fd.springbootdemo.entity.OmMenu" >
+    insert into om_menu (menu_id, parent_id, menu_text, 
+      menu_url, permis_id, enable_flag, 
+      menu_order,icon, create_time, update_time
+      )
+    values (#{menuId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{menuText,jdbcType=VARCHAR}, 
+      #{menuUrl,jdbcType=VARCHAR}, #{permisId,jdbcType=INTEGER}, #{enableFlag,jdbcType=TINYINT}, 
+      #{menuOrder,jdbcType=INTEGER},#{icon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fd.springbootdemo.entity.OmMenu" >
+    insert into om_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="menuText != null" >
+        menu_text,
+      </if>
+      <if test="menuUrl != null" >
+        menu_url,
+      </if>
+      <if test="permisId != null" >
+        permis_id,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+      <if test="menuOrder != null" >
+        menu_order,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="menuText != null" >
+        #{menuText,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="permisId != null" >
+        #{permisId,jdbcType=INTEGER},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=TINYINT},
+      </if>
+      <if test="menuOrder != null" >
+        #{menuOrder,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fd.springbootdemo.entity.OmMenu" >
+    update om_menu
+    <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="menuText != null" >
+        menu_text = #{menuText,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        menu_url = #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="permisId != null" >
+        permis_id = #{permisId,jdbcType=INTEGER},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=TINYINT},
+      </if>
+      <if test="menuOrder != null" >
+        menu_order = #{menuOrder,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fd.springbootdemo.entity.OmMenu" >
+    update om_menu
+    set parent_id = #{parentId,jdbcType=INTEGER},
+      menu_text = #{menuText,jdbcType=VARCHAR},
+      menu_url = #{menuUrl,jdbcType=VARCHAR},
+      permis_id = #{permisId,jdbcType=INTEGER},
+      enable_flag = #{enableFlag,jdbcType=TINYINT},
+      menu_order = #{menuOrder,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryUseMenuFirst" resultMap="BaseResultMap">
+		select
+			om.menu_id,
+			om.menu_text,
+			om.menu_url,
+			om.icon
+		from
+			user_role oro,
+			role_permis rp,
+			om_menu om
+		where
+			oro.user_id = #{userId}
+		and rp.role_id = oro.role_id
+		and om.permis_id = rp.permis_id
+		and om.parent_id = '0'
+		order by om.menu_order
+	</select>
+
+  <select id="queryUseMenuByMenuId" resultMap="BaseResultMap">
+		select
+			om.menu_id,
+			om.menu_text,
+			om.menu_url,
+			om.icon
+		from
+			om_menu om
+		where
+			om.parent_id = #{parentId}
+		order by om.menu_order
+	</select>
+</mapper>

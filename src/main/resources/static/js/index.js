@@ -2,84 +2,60 @@
 	InitLeftMenu();
 	tabClose();
 	tabCloseEven();
-
-
-
-
-	$('#tabs').tabs('add',{
-		title:'疯狂秀才',
-		content:createFrame('http://hxling.cnblogs.com')
-	}).tabs({
-        onSelect: function (title) {
-            var currTab = $('#tabs').tabs('getTab', title);
-            var iframe = $(currTab.panel('options').content);
-
-			var src = iframe.attr('src');
-			if(src)
-				$('#tabs').tabs('update', { tab: currTab, options: { content: createFrame(src)} });
-
-        }
-    });
-
 })
 
 //初始化左侧
 function InitLeftMenu() {
 	$("#nav").accordion({animate:false});
 
-	//读取资源列表
-    var _menus = {"menus":[
-            {"menuid":"1","icon":"icon-sys","menuname":"控件使用",
-                "menus":[
-                    {"menuid":"12","menuname":"疯狂秀才","icon":"icon-add","url":"http://www.mycodes.net"},
-                    {"menuid":"13","menuname":"用户管理","icon":"icon-users","url":"demo2.html"},
-                    {"menuid":"14","menuname":"角色管理","icon":"icon-role","url":"demo2.html"},
-                    {"menuid":"15","menuname":"权限设置","icon":"icon-set","url":"demo.html"},
-                    {"menuid":"16","menuname":"系统日志","icon":"icon-log","url":"demo1.html"}
-                ]
-            },{"menuid":"8","icon":"icon-sys","menuname":"员工管理",
-                "menus":[{"menuid":"21","menuname":"员工列表","icon":"icon-nav","url":"demo.html"},
-                    {"menuid":"22","menuname":"视频监控","icon":"icon-nav","url":"demo1.html"}
-                ]
-            }
-        ]};
+    $.ajax({
+        type : "POST",
+        url : "menu/useMenu",
+        datatype : "json",
+        success : function(data) {
+            console.log(data);
+            $.each(data, function(i, n) {
+                var menulist ='';
+                menulist +='<ul>';
+                $.each(n.children, function(j, o) {
+                    menulist += '<li><div><a ref="'+o.menuId+'" href="#" rel="' + o.menuUrl + '" ><span class="icon '+o.icon+'" >&nbsp;</span><span class="nav">' + o.menuText + '</span></a></div></li> ';
+                })
+                menulist += '</ul>';
 
-    $.each(_menus.menus, function(i, n) {
-		var menulist ='';
-		menulist +='<ul>';
-        $.each(n.menus, function(j, o) {
-			menulist += '<li><div><a ref="'+o.menuid+'" href="#" rel="' + o.url + '" ><span class="icon '+o.icon+'" >&nbsp;</span><span class="nav">' + o.menuname + '</span></a></div></li> ';
-        })
-		menulist += '</ul>';
+                $('#nav').accordion('add', {
+                    title: n.menuText,
+                    content: menulist,
+                    iconCls: 'icon ' + n.icon
+                });
 
-		$('#nav').accordion('add', {
-            title: n.menuname,
-            content: menulist,
-            iconCls: 'icon ' + n.icon
-        });
+                $('.easyui-accordion li a').click(function(){
+                    var tabTitle = $(this).children('.nav').text();
 
+                    var url = $(this).attr("rel");
+                    var menuid = $(this).attr("ref");
+                    var icon = getIcon(menuid,icon);
+
+                    addTab(tabTitle,url,icon);
+                    $('.easyui-accordion li div').removeClass("selected");
+                    $(this).parent().addClass("selected");
+                }).hover(function(){
+                    $(this).parent().addClass("hover");
+                },function(){
+                    $(this).parent().removeClass("hover");
+                });
+
+                //选中第一个
+                var panels = $('#nav').accordion('panels');
+                var t = panels[0].panel('options').title;
+                $('#nav').accordion('select', t);
+
+            });
+        },
+        // 调用出错执行的函数
+        error : function() {
+            alert("请求出错处理");
+        }
     });
-
-	$('.easyui-accordion li a').click(function(){
-		var tabTitle = $(this).children('.nav').text();
-
-		var url = $(this).attr("rel");
-		var menuid = $(this).attr("ref");
-		var icon = getIcon(menuid,icon);
-
-		addTab(tabTitle,url,icon);
-		$('.easyui-accordion li div').removeClass("selected");
-		$(this).parent().addClass("selected");
-	}).hover(function(){
-		$(this).parent().addClass("hover");
-	},function(){
-		$(this).parent().removeClass("hover");
-	});
-
-	//选中第一个
-	var panels = $('#nav').accordion('panels');
-	var t = panels[0].panel('options').title;
-    $('#nav').accordion('select', t);
 }
 //获取左侧导航的图标
 function getIcon(menuid){

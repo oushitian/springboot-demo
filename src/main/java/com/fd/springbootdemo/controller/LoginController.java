@@ -34,7 +34,7 @@ public class LoginController {
 
     @RequestMapping("/login")
     public String login(HttpServletRequest request, Map<String, Object> map){
-        System.out.println("HomeController.login()");
+        log.info("HomeController.login()");
         // 登录失败从request中获取shiro处理的异常信息。
         // shiroLoginFailure:就是shiro异常类的全类名.
         String exception = (String) request.getAttribute("shiroLoginFailure");
@@ -59,20 +59,6 @@ public class LoginController {
         // 此方法不处理登录成功,由shiro进行处理
         return "/login";
     }
-
-//    @RequestMapping("/doLogin")
-//    public Result doLogin(String username, String password) {
-//
-//        Subject subject = SecurityUtils.getSubject();
-//        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-//        try {
-//            subject.login(token);
-//        } catch (AuthenticationException e) {
-//            token.clear();
-//            return ResultGenerator.genFailResult("登录失败，用户名或密码错误！");
-//        }
-//        return ResultGenerator.genSuccessResult("登录成功");
-//    }
 
     @RequestMapping("/403")
     public String unauthorizedRole(){

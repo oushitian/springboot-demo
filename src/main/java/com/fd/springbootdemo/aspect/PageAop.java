@@ -1,9 +1,7 @@
 package com.fd.springbootdemo.aspect;
 
 import com.fd.springbootdemo.annotation.PageQuery;
-import com.fd.springbootdemo.entity.User;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

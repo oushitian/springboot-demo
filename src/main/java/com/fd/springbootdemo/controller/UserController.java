@@ -1,25 +1,14 @@
 package com.fd.springbootdemo.controller;
 
 
-import com.fd.springbootdemo.entity.User;
 import com.fd.springbootdemo.service.UserService;
-import com.fd.springbootdemo.utils.PageUtil;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @Author fengdi
@@ -58,27 +47,27 @@ public class UserController {
      * @param user
      * @return success or error
      */
-    @ApiOperation(value = "新增用户",notes = "",httpMethod = "POST")
-    @ApiImplicitParam(name = "user",value = "用户实体",required = true,dataType = "User")
-    @PostMapping("/user")
-    public String createUser(@RequestBody User user){
-        int num =  userService.insert(user);
-        if(num>0){
-            return "success";
-        }
-        return "error";
-    }
+//    @ApiOperation(value = "新增用户",notes = "",httpMethod = "POST")
+//    @ApiImplicitParam(name = "user",value = "用户实体",required = true,dataType = "User")
+//    @PostMapping("/user")
+//    public String createUser(@RequestBody User user){
+//        int num =  userService.insert(user);
+//        if(num>0){
+//            return "success";
+//        }
+//        return "error";
+//    }
 
-    @ApiOperation(value = "查询用户",notes = "分页查询",httpMethod = "POST")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page",value = "分页数",required = true,dataType = "Integer"),
-            @ApiImplicitParam(name = "pageSize",value = "分页行数",required = true,dataType = "Integer")
-    })
-    @RequestMapping("/getUserList")
-    @ResponseBody
-    public PageInfo<User> getUserList(Integer page, Integer pageSize){
-        return userService.getUserList(page,pageSize);
-    }
+//    @ApiOperation(value = "查询用户",notes = "分页查询",httpMethod = "POST")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "page",value = "分页数",required = true,dataType = "Integer"),
+//            @ApiImplicitParam(name = "pageSize",value = "分页行数",required = true,dataType = "Integer")
+//    })
+//    @RequestMapping("/getUserList")
+//    @ResponseBody
+//    public PageInfo<User> getUserList(Integer page, Integer pageSize){
+//        return userService.getUserList(page,pageSize);
+//    }
 
 //    @RequestMapping("/getUserListByAnnotation")
 //    @ResponseBody

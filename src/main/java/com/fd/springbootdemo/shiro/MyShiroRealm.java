@@ -1,13 +1,10 @@
 package com.fd.springbootdemo.shiro;
 
-import com.fd.springbootdemo.entity.Permission;
-import com.fd.springbootdemo.entity.Role;
-import com.fd.springbootdemo.entity.User;
-import com.fd.springbootdemo.mapper.RolePermissionMapper;
-import com.fd.springbootdemo.service.RolePermissionService;
-import com.fd.springbootdemo.service.RoleService;
+import com.fd.springbootdemo.entity.OmUser;
 import com.fd.springbootdemo.service.UserService;
+import com.fd.springbootdemo.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,11 +13,10 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
 
 /**
  * @Author xyl
@@ -31,11 +27,7 @@ import javax.annotation.Resource;
 public class MyShiroRealm extends AuthorizingRealm {
 
     @Autowired
-    public UserService userService;
-    @Autowired
-    public RoleService roleService;
-    @Autowired
-    private RolePermissionService rolePermissionService;
+    private UserService userService;
 
     /**
      * 授权(权限控制)
@@ -44,16 +36,17 @@ public class MyShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        log.info("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
-        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        User user = (User) principals.getPrimaryPrincipal();
-        for(Role role:roleService.findByUserId(user.getUid())){
-            authorizationInfo.addRole(role.getRole());
-            for(Permission p:rolePermissionService.findByRoleId(role.getId())){
-                authorizationInfo.addStringPermission(p.getPermission());
-            }
-        }
-        return authorizationInfo;
+//        log.info("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
+//        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+//        OmUser user = (OmUser) principals.getPrimaryPrincipal();
+//        for(OmRole role:roleService.findByUserId(user.getUserId())){
+//            authorizationInfo.addRole(role.getRole());
+//            for(Permission p:rolePermissionService.findByRoleId(role.getId())){
+//                authorizationInfo.addStringPermission(p.getPermission());
+//            }
+//        }
+//        return authorizationInfo;
+        return new SimpleAuthorizationInfo();
     }
 
     /**
@@ -66,13 +59,15 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         //获取用户账号
         String username = token.getPrincipal().toString();
-        User user = userService.findUser(username);
+        OmUser user = userService.findUser(username);
         if (user != null) {
             AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                     user,   //认证通过后，存放在session,一般存放user对象
                     user.getPassword(),   //用户数据库中的密码
                     //ByteSource.Util.bytes(username),//salt=username+salt，使用盐值加密一定要加
                     getName());    //返回Realm名
+            Session session = SecurityUtils.getSubject().getSession();
+            session.setAttribute(Constant.USER_SESSION_KEY, user);
             return authenticationInfo;
         }
         return null;

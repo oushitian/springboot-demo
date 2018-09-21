@@ -2,12 +2,12 @@ package com.fd.springbootdemo.entity;
 
 import java.util.Date;
 
-public class UserRole {
+public class RolePermis {
     private Integer id;
 
     private Integer roleId;
 
-    private Integer userId;
+    private Integer permisId;
 
     private Date createTime;
 
@@ -29,12 +29,12 @@ public class UserRole {
         this.roleId = roleId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getPermisId() {
+        return permisId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setPermisId(Integer permisId) {
+        this.permisId = permisId;
     }
 
     public Date getCreateTime() {
