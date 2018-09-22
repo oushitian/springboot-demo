@@ -3,6 +3,8 @@ package com.fd.springbootdemo.mapper;
 import com.fd.springbootdemo.entity.OmUser;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface OmUserMapper {
     int deleteByPrimaryKey(Integer userId);
 
@@ -17,4 +19,6 @@ public interface OmUserMapper {
     int updateByPrimaryKey(OmUser record);
 
     OmUser selectByUserName(@Param("userName") String userName);
+
+    List<OmUser> findUserList();
 }

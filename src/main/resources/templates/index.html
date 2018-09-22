@@ -1,15 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<#assign ctx=req.contextPath />
 <head id="Head1">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <base id="ctx" href="${ctx}">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>jQuery.EasyUI主界面</title>
     <link href="../css/default.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../js/themes/default/easyui.css" />
-    <link rel="stylesheet" type="text/css" href="../js/themes/icon.css" />
-    <script type="text/javascript" src="../js/jquery-1.4.4.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.easyui.min.1.2.2.js"></script>
-	<script type="text/javascript" src='../js/index.js'> </script>
+    <link rel="stylesheet" type="text/css" href="${ctx}/js/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx}/js/themes/icon.css" />
+    <script type="text/javascript" src="${ctx}/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="${ctx}/js/jquery.easyui.min.1.2.2.js"></script>
+	<script type="text/javascript" src='${ctx}/js/index.js'> </script>
     <script type="text/javascript">
+        var base = document.getElementById("ctx").href;
         //设置登录窗口
         function openPwd() {
             $('#w').window({

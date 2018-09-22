@@ -133,4 +133,10 @@
     where
     user_name = #{userName}
   </select>
+
+  <select id="findUserList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from om_user
+  </select>
 </mapper>

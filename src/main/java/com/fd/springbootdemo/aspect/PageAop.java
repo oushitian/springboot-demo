@@ -37,9 +37,13 @@ public class PageAop {
             if (StringUtils.isNotBlank(pageNum)&&StringUtils.isNotBlank(pageSize)) {
                 try {
                     PageHelper.startPage(Integer.valueOf(pageNum), Integer.valueOf(pageSize));
-                    Object result = joinPoint.proceed();
-                    //PageInfo pageInfo =  new PageInfo<>((List<?>) result);
+                    List<?> result = (List<?>) joinPoint.proceed();
                     return result;
+//                    PageInfo pageInfo =  new PageInfo<>((result));
+//                    DataGridResult dataGridResult = new DataGridResult();
+//                    dataGridResult.setTotal(pageInfo.getTotal());
+//                    dataGridResult.setRows(result);
+//                    return dataGridResult;
                 }finally {
                     if (PageHelper.getLocalPage() != null)
                         PageHelper.clearPage();

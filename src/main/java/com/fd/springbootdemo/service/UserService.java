@@ -1,10 +1,13 @@
 package com.fd.springbootdemo.service;
 
+import com.fd.springbootdemo.annotation.PageQuery;
 import com.fd.springbootdemo.entity.OmUser;
 import com.fd.springbootdemo.mapper.OmUserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -35,6 +38,12 @@ public class UserService {
 
     public OmUser findUser(String name) {
         return omUserMapper.selectByUserName(name);
+    }
+
+
+    @PageQuery(pageNumName = "page",pageSizeName = "rows")//和默认名字不一样的这里需要指明
+    public List<OmUser> getUserList() {
+        return omUserMapper.findUserList();
     }
 
 //    @Async//相当于新开了一个线程执行任务

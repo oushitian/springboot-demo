@@ -1,5 +1,6 @@
 package com.fd.springbootdemo.utils;
 
+import com.fd.springbootdemo.entity.vo.DataGridResult;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -13,12 +14,14 @@ public class PageUtil {
 
     /**
      * 得到分页对象的封装
-     * @param list
-     * @param <T>
      * @return
      */
-    public static <T> T getPageInfo(List<?> list){
-        return (T) new PageInfo(list);
+    public static DataGridResult getPageInfo(List<?> list){
+        PageInfo<?> pageInfo = new PageInfo(list);
+        DataGridResult dataGridResult = new DataGridResult();
+        dataGridResult.setTotal(pageInfo.getTotal());
+        dataGridResult.setRows(list);
+        return  dataGridResult;
     }
 
 }

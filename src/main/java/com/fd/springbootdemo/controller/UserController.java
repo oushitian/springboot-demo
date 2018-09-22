@@ -1,14 +1,15 @@
 package com.fd.springbootdemo.controller;
 
 
+import com.fd.springbootdemo.entity.vo.DataGridResult;
 import com.fd.springbootdemo.service.UserService;
+import com.fd.springbootdemo.utils.PageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,7 +36,18 @@ public class UserController {
     @RequestMapping("/userList")
     @RequiresPermissions("person_kaoqin")//权限管理;
     public String userInfo(){
-        return "user/userList";
+        return "userList";
+    }
+
+    /**
+     * 用户查询.
+     * @return
+     */
+
+    @RequestMapping("/findUserList")
+    @ResponseBody
+    public DataGridResult userInfos(){
+        return PageUtil.getPageInfo(userService.getUserList());
     }
 
 //    @RequestMapping("/exceptionTest")
@@ -44,11 +56,6 @@ public class UserController {
 //        return "exceptionTest";
 //    }
 
-    /**
-     * 新增User
-     * @param user
-     * @return success or error
-     */
 //    @ApiOperation(value = "新增用户",notes = "",httpMethod = "POST")
 //    @ApiImplicitParam(name = "user",value = "用户实体",required = true,dataType = "User")
 //    @PostMapping("/user")
