@@ -1,7 +1,7 @@
 package com.fd.springbootdemo.interceptor;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -13,8 +13,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class SessionConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SessionInterceptor()).addPathPatterns("/**");
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowCredentials(true)
+                .allowedMethods("*")
+                .allowedHeaders("*")
+                .maxAge(3600);
     }
-
 }

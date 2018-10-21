@@ -44,6 +44,9 @@ public class ShiroConfig {
         //未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+//
+//        Map<String, Filter> filterMap = shiroFilterFactoryBean.getFilters();
+//        filterMap.put("authc", new MyAuthenticationFilter());
         return shiroFilterFactoryBean;
     }
 
